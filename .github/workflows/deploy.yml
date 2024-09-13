@@ -37,7 +37,7 @@ jobs:
       # Run the Selenium script to generate the HTML
       - name: Run Selenium script
         run: |
-          python path_to_your_script.py
+          python main.py
 
       # Rename the generated HTML file for GitHub Pages
       - name: Prepare artifact for deployment
