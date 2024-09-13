@@ -1,0 +1,59 @@
+name: Selenium HTML Fetch and Deploy (Every 4 Hours)
+
+# Schedule the action to run every 4 hours
+on:
+  schedule:
+    - cron: '0 */4 * * *'  # Runs every 4 hours
+  workflow_dispatch:  # Allows you to trigger it manually if needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      # Install Chrome
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: latest
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium webdriver-manager
+
+      # Run the Selenium script to generate the HTML
+      - name: Run Selenium script
+        run: |
+          python main.py
+
+      # Deploy the generated HTML to the `gh-pages` branch
+      - name: Deploy to GitHub Pages
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git fetch
+          git checkout -B gh-pages  # Create the gh-pages branch if it doesn't exist
+          mv git_commit_graph.html index.html  # Rename the HTML file to index.html for GitHub Pages
+          git add index.html
+          git commit -m "Auto-update HTML via GitHub Actions"
+          git push -f origin gh-pages  # Force push to update the gh-pages branch
+
+      # Optionally: Upload the HTML artifact for debugging purposes
+      - name: Upload HTML artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: git_commit_graph
+          path: index.html
+
