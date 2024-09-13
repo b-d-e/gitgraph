@@ -4,7 +4,7 @@ name: Selenium HTML Fetch and Deploy (Every 4 Hours)
 on:
   schedule:
     - cron: '0 */4 * * *'  # Runs every 4 hours
-  workflow_dispatch:  # Allows you to manually trigger the workflow
+  workflow_dispatch:  # Allows you to trigger it manually if needed
 
 jobs:
   # Build job
@@ -37,20 +37,21 @@ jobs:
       # Run the Selenium script to generate the HTML
       - name: Run Selenium script
         run: |
-          python main.py
+          python path_to_your_script.py
 
-      # Rename the generated HTML file for GitHub Pages
+      # Move the generated HTML file to a directory for upload
       - name: Prepare artifact for deployment
         run: |
-          mv git_commit_graph.html index.html  # Rename the HTML file to index.html for GitHub Pages
+          mkdir output
+          mv git_commit_graph.html output/index.html  # Move the HTML file to a directory called 'output'
 
-      # Upload the artifact for deployment in the next job
+      # Upload the artifact (the 'output' directory)
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v1
         with:
           name: pages  # Name of the artifact
-          path: index.html  # The file to upload as an artifact
-
+          path: output  # Upload the directory 'output'
+      
   # Deploy job
   deploy:
     # Add a dependency on the build job
