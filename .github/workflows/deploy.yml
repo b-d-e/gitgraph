@@ -70,9 +70,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Download the artifact produced by the build job
-      - name: Download artifact from build
-        uses: actions/download-pages-artifact@v1
+      # # Download the artifact produced by the build job
+      # - name: Download artifact from build
+      #   uses: actions/download-pages-artifact@v1
 
       # Deploy the artifact to GitHub Pages
       - name: Deploy to GitHub Pages
