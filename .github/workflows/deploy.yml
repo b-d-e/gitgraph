@@ -51,4 +51,3 @@ jobs:
           branch: gh-pages  # Deploy to the `gh-pages` branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
-
