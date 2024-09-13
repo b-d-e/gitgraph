@@ -47,7 +47,7 @@ jobs:
 
       # Upload the artifact (the 'output' directory)
       - name: Upload artifact for Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: pages  # Name of the artifact
           path: output  # Upload the directory 'output'
