@@ -4,9 +4,10 @@ name: Selenium HTML Fetch and Deploy (Every 4 Hours)
 on:
   schedule:
     - cron: '0 */4 * * *'  # Runs every 4 hours
-  workflow_dispatch:  # Allows you to trigger it manually if needed
+  workflow_dispatch:  # Allows you to manually trigger the workflow
 
 jobs:
+  # Build job
   build:
     runs-on: ubuntu-latest
 
@@ -36,18 +37,43 @@ jobs:
       # Run the Selenium script to generate the HTML
       - name: Run Selenium script
         run: |
-          python main.py
+          python path_to_your_script.py
 
-
-      # Prepare artifact for deployment to GitHub Pages
+      # Rename the generated HTML file for GitHub Pages
       - name: Prepare artifact for deployment
         run: |
           mv git_commit_graph.html index.html  # Rename the HTML file to index.html for GitHub Pages
 
-      # Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2  # Use the deploy-pages action
+      # Upload the artifact for deployment in the next job
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v1
         with:
-          branch: gh-pages  # Deploy to the `gh-pages` branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
+          name: pages  # Name of the artifact
+          path: index.html  # The file to upload as an artifact
+
+  # Deploy job
+  deploy:
+    # Add a dependency on the build job
+    needs: build
+
+    # Permissions for deploying to GitHub Pages
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Specify the environment as GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the artifact produced by the build job
+      - name: Download artifact from build
+        uses: actions/download-pages-artifact@v1
+
+      # Deploy the artifact to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4  # Specify the deploy-pages action version
