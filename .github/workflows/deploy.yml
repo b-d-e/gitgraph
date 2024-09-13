@@ -37,7 +37,7 @@ jobs:
       # Run the Selenium script to generate the HTML
       - name: Run Selenium script
         run: |
-          python path_to_your_script.py
+          python main.py
 
       # Move the generated HTML file to a directory for upload
       - name: Prepare artifact for deployment
