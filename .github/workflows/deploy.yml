@@ -47,11 +47,10 @@ jobs:
 
       # Upload the artifact (the 'output' directory)
       - name: Upload artifact for Pages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v1  # Correct action
         with:
-          name: github-pages  # Name of the artifact
           path: output  # Upload the directory 'output'
-      
+
   # Deploy job
   deploy:
     # Add a dependency on the build job
@@ -64,17 +63,11 @@ jobs:
 
     # Specify the environment as GitHub Pages
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: github-pages  # Correctly specify the environment
 
     runs-on: ubuntu-latest
 
     steps:
-      # # Download the artifact produced by the build job
-      # - name: Download artifact from build
-      #   uses: actions/download-pages-artifact@v1
-
       # Deploy the artifact to GitHub Pages
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4  # Specify the deploy-pages action version
+        uses: actions/deploy-pages@v1  # Correct action version
