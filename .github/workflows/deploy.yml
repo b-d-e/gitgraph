@@ -38,8 +38,11 @@ jobs:
         run: |
           python main.py
 
+
       # Deploy the generated HTML to the `gh-pages` branch
       - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
@@ -48,7 +51,8 @@ jobs:
           mv git_commit_graph.html index.html  # Rename the HTML file to index.html for GitHub Pages
           git add index.html
           git commit -m "Auto-update HTML via GitHub Actions"
-          git push -f origin gh-pages  # Force push to update the gh-pages branch
+          git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages  # Push with token authentication
+
 
       # Optionally: Upload the HTML artifact for debugging purposes
       - name: Upload HTML artifact
