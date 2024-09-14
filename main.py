@@ -62,7 +62,7 @@ def fetch_graph():
                     });
                 }
 
-                // Optionally inline scripts, but be cautious
+                // Optionally inline scripts
                 function inlineScripts() {
                     var scripts = Array.from(document.scripts);
                     scripts.forEach(function(script) {
