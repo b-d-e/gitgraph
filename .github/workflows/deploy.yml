@@ -3,7 +3,8 @@ name: Selenium HTML Fetch and Deploy To Pages (Every 12 Hours)
 # Schedule the action to run every 12 hours
 on:
   schedule:
-    - cron: '0 */12 * * *'  # Runs every 12 hours - UTC time for github
+    - cron: "*/5 * * * *"  # Runs every 12 hours - UTC time for github
+    # - cron: "0 */12 * * *"  # Runs every 12 hours - UTC time for github
   workflow_dispatch:  # Allows you to trigger it manually if needed
 
 jobs:
