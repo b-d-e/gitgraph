@@ -9,9 +9,8 @@ on:
 jobs:
   # Build job
   build:
-    # runs-on: ubuntu-latest
-    runs-on: self-hosted
-
+    runs-on: ubuntu-latest
+    
     steps:
       # Checkout the repository
       - name: Checkout code
@@ -66,8 +65,7 @@ jobs:
     environment:
       name: github-pages  # Correctly specify the environment
 
-    # runs-on: ubuntu-latest
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       # Deploy the artifact to GitHub Pages
