@@ -42,7 +42,8 @@ jobs:
       - name: Prepare artifact for deployment
         run: |
           mkdir output
-          mv git_commit_graph.html output/index.html  # Move the HTML file to a directory called 'output'
+          mv dark.html output/dark.html  # Move the HTML file to a directory called 'output'
+          mv light.html output/light.html
 
       # Upload the artifact (the 'output' directory)
       - name: Upload artifact for Pages
