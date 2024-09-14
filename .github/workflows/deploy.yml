@@ -1,4 +1,4 @@
-name: Selenium HTML Fetch and Deploy To Pages (Every 12 Hours)
+name: Selenium HTML Fetch and Deploy To Pages 
 
 on:
   schedule:
