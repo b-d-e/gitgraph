@@ -12,8 +12,8 @@ def fetch_graph():
     options.add_argument("--headless")  # Run headless for no GUI
     options.add_argument("--window-size=1920,430")  # Set window size to capture full page
     # Disable web security to bypass CORS (for testing purposes)
-    options.add_argument("--disable-web-security")
-    options.add_argument("--allow-running-insecure-content")
+    # options.add_argument("--disable-web-security")
+    # options.add_argument("--allow-running-insecure-content")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     try:
@@ -114,4 +114,5 @@ def fetch_graph():
 
 if __name__ == '__main__':
     fetch_graph()
+
 
