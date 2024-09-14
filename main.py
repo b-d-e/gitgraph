@@ -11,9 +11,6 @@ def fetch_graph():
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")  # Run headless for no GUI
     options.add_argument("--window-size=1920,430")  # Set window size to capture full page
-    # Disable web security to bypass CORS (for testing purposes)
-    # options.add_argument("--disable-web-security")
-    # options.add_argument("--allow-running-insecure-content")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     try:
@@ -23,7 +20,7 @@ def fetch_graph():
         # Give the page time to load fully
         time.sleep(5)  # Adjust if necessary
 
-        # Inline all external resources
+        # Inline all external resources and add themes
         inline_resources_script = """
         return (function() {
             try {
@@ -62,30 +59,42 @@ def fetch_graph():
                     });
                 }
 
-                // Optionally inline scripts
-                function inlineScripts() {
-                    var scripts = Array.from(document.scripts);
-                    scripts.forEach(function(script) {
-                        if (script.src) {
-                            try {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open('GET', script.src, false);
-                                xhr.send(null);
-                                if (xhr.status === 200) {
-                                    var inlineScript = document.createElement('script');
-                                    inlineScript.textContent = xhr.responseText;
-                                    script.parentNode.replaceChild(inlineScript, script);
-                                }
-                            } catch(e) {
-                                console.log('Error inlining script:', e);
-                            }
-                        }
-                    });
+                function addThemes() {
+                    var themeStyle = document.createElement('style');
+                    themeStyle.textContent = `
+                    [data-theme=light] {
+                        color-scheme: light;
+                        --bg: #EEEEEE;
+                        --bg-light: #CBCDCD;
+                        --text: #41474E;
+                        --text-light: #646868;
+                        --accent: #D26878;
+                        --accent-light: #e08f67;
+                        --accent-text: var(--bg);
+                        --border: #646868;
+                        --link: #5690AF;
+                    }
+
+                    [data-theme=dark] {
+                        color-scheme: dark;
+                        --bg: #222529;
+                        --bg-light: #464949;
+                        --text: #D6D6D6;
+                        --text-light: #DBD5BC;
+                        --accent: #78B6AD;
+                        --accent-light: #87C9E5;
+                        --accent-text: var(--bg);
+                        --border: #DBD5BC;
+                        --link: #E2AEA2;
+                    }
+                    `;
+                    document.head.appendChild(themeStyle);
+                    document.documentElement.setAttribute('data-theme', 'light');  // Set the default theme to light
                 }
 
                 inlineCSS();
                 inlineImages();
-                // inlineScripts(); // Uncomment if necessary, but be cautious with scripts
+                addThemes();
 
                 return new XMLSerializer().serializeToString(document);
             } catch (e) {
@@ -114,5 +123,3 @@ def fetch_graph():
 
 if __name__ == '__main__':
     fetch_graph()
-
-
