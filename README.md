@@ -3,3 +3,9 @@ Caches git graph produced by [jandee.vercel.app](https://jandee.vercel.app/), wi
 Runs on crontab GitHub action 3 times a day, deploying to GitHub pages.
 
 Output at [dark.html](https://benjaminetheridge.com/gitgraph/dark.html) and [light.html](https://benjaminetheridge.com/gitgraph/light.html)
+
+Embeds:
+![dark](https://benjaminetheridge.com/gitgraph/dark.html)
+
+![light](https://benjaminetheridge.com/gitgraph/light.html)
+
