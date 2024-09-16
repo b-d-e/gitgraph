@@ -44,7 +44,8 @@ jobs:
           mkdir output
           mv dark.html output/dark.html  # Move the HTML file to a directory called 'output'
           mv light.html output/light.html
-
+          mv index.html output/index.html
+      
       # Upload the artifact (the 'output' directory)
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v1  # Correct action
