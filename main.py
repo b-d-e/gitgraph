@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def fetch_graph_and_save_variants():
     """Downloads the fully rendered DOM content once and saves both dark and light variants as self-contained HTML files."""
-    URL = "https://jandee.vercel.app/b-d-e?footer=false"
+    URL = "https://jandee.vercel.app/b-d-e?footer=false&tz=Europe/London"
 
     # Set up Selenium to use Chrome WebDriver
     options = webdriver.ChromeOptions()
