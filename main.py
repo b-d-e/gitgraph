@@ -21,20 +21,20 @@ def fetch_graph_and_save_variants():
 
     # Define color schemes for the graph squares (multi-level)
     light_mode_colors = {
-        '--color-calendar-graph-day-bg': '#ebedf0',    # Very light background for the grid
-        '--color-calendar-graph-day-L1-bg': '#bbdefb',  # Lightest blue
-        '--color-calendar-graph-day-L2-bg': '#64b5f6',  # Medium blue
-        '--color-calendar-graph-day-L3-bg': '#1e88e5',  # Darker blue
-        '--color-calendar-graph-day-L4-bg': '#1565c0',  # Darkest blue
+        # '--color-calendar-graph-day-bg': '#ebedf0',    # Very light background for the grid
+        '--color-calendar-graph-day-L1-bg': '#D0E8F2',  # Lightest blue
+        '--color-calendar-graph-day-L2-bg': '#A9D6EB',  # Medium blue
+        '--color-calendar-graph-day-L3-bg': '#82C4E3',  # Darker blue
+        '--color-calendar-graph-day-L4-bg': '#5BB2DB',  # Darkest blue
         '--color-calendar-graph-day-border': 'rgba(27,31,35,.06)'
     }
 
     dark_mode_colors = {
         '--color-calendar-graph-day-bg': '#222',          # Dark background for the grid
-        '--color-calendar-graph-day-L1-bg': '#FFCC80',    # Muted light orange
-        '--color-calendar-graph-day-L2-bg': '#FFB74D',    # Muted medium orange
-        '--color-calendar-graph-day-L3-bg': '#FFA726',    # Muted darker orange
-        '--color-calendar-graph-day-L4-bg': '#FF9800',    # Muted darkest orange
+        '--color-calendar-graph-day-L1-bg': '#E8A67B',    # Muted light orange
+        '--color-calendar-graph-day-L2-bg': '#D67C4E',    # Muted medium orange
+        '--color-calendar-graph-day-L3-bg': '#BF5F34',    # Muted darker orange
+        '--color-calendar-graph-day-L4-bg': '#A3461A',    # Muted darkest orange
         '--color-calendar-graph-day-border': 'rgba(27,31,35,.06)'
     }
 
