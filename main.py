@@ -18,7 +18,25 @@ def fetch_graph_and_save_variants():
     light_background_color = '#EEEEEE'
     dark_file_name = 'dark.html'
     light_file_name = 'light.html'
-    dark_square_color = '#2C2E32'  # Equivalent to 44,46,50
+
+    # Define color schemes for the graph squares (multi-level)
+    light_mode_colors = {
+        '--color-calendar-graph-day-bg': '#ebedf0',    # Very light background for the grid
+        '--color-calendar-graph-day-L1-bg': '#bbdefb',  # Lightest blue
+        '--color-calendar-graph-day-L2-bg': '#64b5f6',  # Medium blue
+        '--color-calendar-graph-day-L3-bg': '#1e88e5',  # Darker blue
+        '--color-calendar-graph-day-L4-bg': '#1565c0',  # Darkest blue
+        '--color-calendar-graph-day-border': 'rgba(27,31,35,.06)'
+    }
+
+    dark_mode_colors = {
+        '--color-calendar-graph-day-bg': '#222',          # Dark background for the grid
+        '--color-calendar-graph-day-L1-bg': '#FFCC80',    # Muted light orange
+        '--color-calendar-graph-day-L2-bg': '#FFB74D',    # Muted medium orange
+        '--color-calendar-graph-day-L3-bg': '#FFA726',    # Muted darker orange
+        '--color-calendar-graph-day-L4-bg': '#FF9800',    # Muted darkest orange
+        '--color-calendar-graph-day-border': 'rgba(27,31,35,.06)'
+    }
 
     try:
         # Fetch the page
@@ -85,24 +103,26 @@ def fetch_graph_and_save_variants():
             print(inlined_html)
             return
 
-        # Now, save the light mode version first
+        # Save the light mode version first with blue shades
         driver.execute_script(f"document.body.style.backgroundColor = '{light_background_color}';")
+        driver.execute_script(f"""
+        (function() {{
+            var root = document.documentElement;
+            {''.join([f"root.style.setProperty('{key}', '{value}');" for key, value in light_mode_colors.items()])}
+        }})();
+        """)
         light_html = driver.execute_script("return new XMLSerializer().serializeToString(document);")
 
         with open(light_file_name, 'w', encoding='utf-8') as f:
             f.write(light_html)
         print(f"Page saved as '{light_file_name}'")
 
-        # Now apply dark mode changes (background and square color override)
+        # Now apply dark mode changes with muted orange shades
         driver.execute_script(f"document.body.style.backgroundColor = '{dark_background_color}';")
         driver.execute_script(f"""
         (function() {{
-            // Select all rect elements with the 'fill' attribute matching the default variable for the calendar background
-            var squares = document.querySelectorAll('rect[fill="var(--color-calendar-graph-day-bg)"]');
-            squares.forEach(function(square) {{
-                // Override the 'fill' attribute to the desired dark color (44,46,50 -> {dark_square_color})
-                square.setAttribute('fill', '{dark_square_color}');
-            }});
+            var root = document.documentElement;
+            {''.join([f"root.style.setProperty('{key}', '{value}');" for key, value in dark_mode_colors.items()])}
         }})();
         """)
         dark_html = driver.execute_script("return new XMLSerializer().serializeToString(document);")
